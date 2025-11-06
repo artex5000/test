@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <title>WebGazer.js Demo</title>
+  <script src="https://webgazer.cs.brown.edu/webgazer.js"></script>
+</head>
+<body>
+  <h1>WebGazer.js – śledzenie wzroku</h1>
+  <p>Patrz na różne miejsca ekranu – w konsoli pojawią się współrzędne, gdzie patrzysz.</p>
+
+  <script>
+    // Uruchomienie WebGazer
+    window.onload = async function() {
+      await webgazer.setRegression('ridge')   // metoda obliczeń
+                    .setTracker('clmtrackr')  // metoda śledzenia twarzy
+                    .setGazeListener(function(data, elapsedTime) {
+                      if (data == null) return;
+                      console.log(`x: ${data.x}, y: ${data.y}`);
+                    })
+                    .begin();
+
+      // Pokaż okienko z kamerą w rogu ekranu
+      webgazer.showVideoPreview(true).showPredictionPoints(true);
+    };
+  </script>
+</body>
+</html>
